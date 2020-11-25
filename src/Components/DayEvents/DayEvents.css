@@ -1,0 +1,28 @@
+
+
+
+.events-for-the-day {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    margin-top: 10px;
+}
+
+.events-hours-light {
+    background-color: #606fee;
+    border-radius: 12px;
+    color: white;
+    width: 4vw;
+}
+
+.events-hours-dark {
+    background-color: white;
+    border-radius: 12px;
+    color: #606fee;
+    width: 4vw;
+}
+
+.events-title {
+    width: 50%;
+    text-align: left;
+}
