@@ -4,10 +4,67 @@
     justify-content: space-around;
 }
 
-.fc-header-toolbar, .fc-toolbar, .fc-toolbar-ltr {
+/* .fc-header-toolbar, .fc-toolbar, .fc-toolbar-ltr {
     font-size: xx-large;
     font-weight: 700;
+} */
+
+.eventPopup {
+    -webkit-box-shadow: 0px 0px 36px -16px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 36px -16px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 36px -16px rgba(0,0,0,0.75);
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    width: 500px;
+    height: 500px;
+    color: white;
+    padding: 10px;
+    border-radius: 12px;
+    background-color: #006e90;
 }
+
+.event-popup-content {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: large;
+}
+
+.event-popup-input {
+    height: 30px;
+    outline: none;
+    /* border-radius: 5px; */
+    border-top:0;
+    border-right:0;
+    border-left:0;
+    border-bottom: 2px solid white;
+    background-color: #006e90;
+    color: white;
+}
+
+.event-popup-time {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: large;
+}
+
+.event-popup-dropdown {
+    width: 55px;
+    height: 25px;
+    outline: none;
+    border-radius: 6px;
+}
+
+.event-popup-date {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: large;
+}
+
 
 .events-div-dark {
     width: 20vw;
@@ -34,6 +91,17 @@
     width: 50vh;
 } */
 
+.calendar-content {
+    margin-top: 10%;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    font-weight: 600;
+}
+
+.calendar-title {
+    margin-top: 50px;
+}
+
 .calendar-div-light {
     width: 80vw;
     /* height: 80%; */
@@ -48,21 +116,31 @@
     color: white;
 }
 
+.singleDay-block {
+    cursor: pointer;
+}
 
-.title-sweetalert, .hours-sweetalert, .minutes-sweetalert, .duration-sweetalert {
+.singleDay-block:hover {
+    background-color: #d7b8f3;
+    border-radius: 5px;
+    
+}
+
+
+/* .title-sweetalert, .hours-sweetalert, .minutes-sweetalert, .duration-sweetalert {
     border: 1px solid #767676;
     height: 40px;
     width: 200px;
     font-size: medium;
     border-radius: 5px;
-}
-
+} */
+/* 
 .sweetAlert-block {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
+} */
 
 .dark-light-toggle-LIGHT {
     position: absolute;

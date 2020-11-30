@@ -3,23 +3,23 @@ import React, { useState, useEffect } from 'react'
 
 import "./DayEvents.css"
 
-function DayEvents({ clickedDate, eventsData, dayNight }) {
+function DayEvents({ clickedDate, events, dayNight }) {
 
     const [eventsOfTheDay, setEventsOfTheDay] = useState([])
     const [noEventForTheDay, setNoEventForTheDay] = useState(true)
     
 
     useEffect(() => {
-        if(eventsData[clickedDate]){
+        if(events[clickedDate]){
             setNoEventForTheDay(false)
-            console.log("Events are present for the day",eventsData[clickedDate])
-            setEventsOfTheDay(eventsData[clickedDate])
+            console.log("Events are present for the day",events[clickedDate])
+            setEventsOfTheDay(events[clickedDate])
         } else {
             setNoEventForTheDay(true)
             console.log("no events scheduled for the day")
         }
         
-    },[clickedDate, eventsData])
+    },[clickedDate, events])
 
     
     return (
@@ -32,9 +32,9 @@ function DayEvents({ clickedDate, eventsData, dayNight }) {
                         { eventsOfTheDay.map((item, index) => {
                             return (
                                 <div key={index} className="events-for-the-day">
-                                    <p className={dayNight ? "events-hours-light" : "events-hours-dark"}>{item.hours}:{item.minutes}</p>
+                                    <p className={dayNight ? "events-hours-light" : "events-hours-dark"}>{item.selectedHours}:{item.selectedMinutes} {item.amPm}</p>
                                     <p className="events-duration">{item.duration} mins</p>
-                                    <p className="events-title">{item.title}</p>
+                                    <p className="events-title">{item.name}</p>
                                 </div>
                             )
                         }) }
