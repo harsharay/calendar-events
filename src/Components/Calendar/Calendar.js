@@ -5,6 +5,8 @@ import Switch from '@material-ui/core/Switch';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import NightsStayIcon from '@material-ui/icons/NightsStay';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 
 import "./Calendar.css"
 
@@ -17,7 +19,6 @@ function Calendar() {
     const [currentDay, setCurrentDay] = useState('')
     const [currentMonth, setCurrentMonth] = useState('')
     const [currentYear, setCurrentYear] = useState(0)
-    const [currentCompleteDate, setCurrentCompleteDate] = useState("")
     const [allMonths, setAllMonths] = useState({
         1 : 'January',
         2 : 'February',
@@ -44,9 +45,8 @@ function Calendar() {
     const [events, setEvents] = useState({})
 
     useEffect(() => {
-        // let presentMonth = (new Date().getMonth()+1)
-        // let presentYear = new Date().getFullYear()
-        console.log(49, currentMonth)
+        setDaysInCurrentMonth([""])
+        
         if(currentMonth) {
             let numOfDays = new Date(currentYear, currentMonth, 0).getDate()
             for(let i=1;i<=numOfDays;i++){
@@ -82,7 +82,49 @@ function Calendar() {
                 )
             })
         }
+
     },[])
+
+    useEffect(() => {
+        let presentMonth = (new Date().getMonth()+1)
+        
+        let listOfElements;
+        console.log(92, document.querySelector(".singleDay-block-light"), document.querySelector(".singleDay-block-dark"))
+        if(document.querySelector(".singleDay-block-light")) {
+            listOfElements = [...document.querySelectorAll(".singleDay-block-light")]
+            
+            listOfElements.forEach(element => {
+            
+                if(element.innerText === String(new Date().getDate())){
+                    if(presentMonth === currentMonth ) {
+                        element.style.backgroundColor = "#d9b002";
+                        element.style.color = "white"
+                    } else {
+                        element.style.backgroundColor = "";
+                        element.style.color = ""
+                    } 
+                }
+        })
+        } else if(document.querySelector(".singleDay-block-dark")) {
+            listOfElements = [...document.querySelectorAll(".singleDay-block-dark")]
+
+            listOfElements.forEach(element => {
+            
+                if(element.innerText === String(new Date().getDate())){
+                    if(presentMonth === currentMonth ) {
+                        element.style.backgroundColor = "#d9b002";
+                        element.style.color = "white"
+                    } else {
+                        element.style.backgroundColor = "";
+                        element.style.color = ""
+                    } 
+                }
+        })
+        }
+
+        
+        
+    },[daysInCurrentMonth, currentMonth, dayNight])
 
     
     const handleToggleChange = () => {
@@ -98,9 +140,8 @@ function Calendar() {
         setCurrentDay(day)
         const clickedDate = `${day}-${currentMonth}-${currentYear}` 
         setClickedDate(clickedDate)
-        console.log(91, clickedDate, currentCompleteDate)
 
-        // setCurrentDate()
+        
         console.log(day, currentMonth, allMonths[currentMonth]);
     }
 
@@ -111,7 +152,6 @@ function Calendar() {
 
     const handleAddEventClick = () => {
         let fullDate = `${currentDay}-${currentMonth}-${currentYear}`
-        setCurrentCompleteDate(fullDate)
         if(events[fullDate]){
                 setEvents({
                     ...events,
@@ -142,16 +182,32 @@ function Calendar() {
 
     }
 
+    const handlePreviousMonthClick = () => {
+        setCurrentMonth(prev => {
+            return (
+                prev - 1
+            )
+        })
+    }
+
+    const handleNextMonthClick = () => {
+        setCurrentMonth(prev => {
+            return (
+                prev + 1
+            )
+        })
+    }
+
 
     return (
         <div>
             { popup && 
-                <div className="eventPopup">
-                    <HighlightOffIcon onClick={handlePopupClose}/>
+                <div className={dayNight ? "eventPopup-light" : "eventPopup-dark"}>
+                    <HighlightOffIcon onClick={handlePopupClose} fontSize="large"/>
                     <h3>Add the event details</h3>
                     <div className="event-popup-content">
                         <p>Enter event Name</p>
-                        <input type="text" value={eventName} onChange={handleEventNameChange} className="event-popup-input"/>
+                        <input type="text" value={eventName} onChange={handleEventNameChange} className={dayNight ? "event-popup-input-light" : "event-popup-input-dark"}/>
                     </div>
                     <div className="event-popup-time">
                         <div>
@@ -185,15 +241,15 @@ function Calendar() {
                             </select>
                         </div>
                     </div>
-                    <div>
-                        <p>Enter duration of the event(minutes)</p>
-                        <input type="text" value={duration} onChange={e => setDuration(e.target.value)} className="event-popup-input"/>
+                    <div className="event-popup-content">
+                        <p>Duration (minutes)</p>
+                        <input type="text" value={duration} onChange={e => setDuration(e.target.value)} className={dayNight ? "event-popup-input-light" : "event-popup-input-dark"}/>
                     </div>
                     <div className="event-popup-date">
                             <p>Event Date</p> 
                             <p>{`${currentDay}-${currentMonth}-${currentYear}`}</p>
                     </div>
-                    <button onClick={handleAddEventClick}>Add event</button>
+                    <button onClick={handleAddEventClick} className="addEvent-button">Add</button>
                 </div>   
             }
             <div className="calendar-events-block">
@@ -204,13 +260,17 @@ function Calendar() {
                     </div>
                 </div>
                 <div className={dayNight ? "calendar-div-light" : "calendar-div-dark"}>
-                    <h1 className="calendar-title">{ allMonths[currentMonth] }</h1>
+                    <div className="calendar-header">
+                        { currentMonth>1 && <NavigateBeforeIcon className={dayNight ? "previous-next-icons-light" : "previous-next-icons-dark"} fontSize="large" onClick={handlePreviousMonthClick}/> }
+                        <h1 className="calendar-title">{ allMonths[currentMonth] }</h1>
+                        { currentMonth<12 && <NavigateNextIcon className={dayNight ? "previous-next-icons-light" : "previous-next-icons-dark"} fontSize="large" onClick={handleNextMonthClick}/> }
+                    </div>
                     <div className="calendar-content">
                         {
                             daysInCurrentMonth && 
                                 daysInCurrentMonth.map((day, dayIndex) => {
                                     return (
-                                        <div key={dayIndex} className="singleDay-block" onClick={() => handleDayClick(day)}>
+                                        <div key={dayIndex} className={dayNight ? "singleDay-block-light" : "singleDay-block-dark"} onClick={() => handleDayClick(day)}>
                                             <p>{day}</p>
                                         </div>
                                     )
