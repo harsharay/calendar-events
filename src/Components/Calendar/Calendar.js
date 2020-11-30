@@ -89,12 +89,10 @@ function Calendar() {
         let presentMonth = (new Date().getMonth()+1)
         
         let listOfElements;
-        console.log(92, document.querySelector(".singleDay-block-light"), document.querySelector(".singleDay-block-dark"))
         if(document.querySelector(".singleDay-block-light")) {
             listOfElements = [...document.querySelectorAll(".singleDay-block-light")]
-            
+
             listOfElements.forEach(element => {
-            
                 if(element.innerText === String(new Date().getDate())){
                     if(presentMonth === currentMonth ) {
                         element.style.backgroundColor = "#d9b002";
@@ -109,7 +107,6 @@ function Calendar() {
             listOfElements = [...document.querySelectorAll(".singleDay-block-dark")]
 
             listOfElements.forEach(element => {
-            
                 if(element.innerText === String(new Date().getDate())){
                     if(presentMonth === currentMonth ) {
                         element.style.backgroundColor = "#d9b002";
