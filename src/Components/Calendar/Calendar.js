@@ -40,8 +40,8 @@ function Calendar() {
     const [duration, setDuration] = useState("")
     const [amPm, setAmPm] = useState('AM')
     const [clickedDate, setClickedDate] = useState('')
-    const [selectedHours, setSelectedHours] = useState(0)
-    const [selectedMinutes, setSelectedMinutes] = useState(0)
+    const [selectedHours, setSelectedHours] = useState(9)
+    const [selectedMinutes, setSelectedMinutes] = useState(30)
     const [events, setEvents] = useState({})
 
     useEffect(() => {
@@ -200,7 +200,7 @@ function Calendar() {
         <div>
             { popup && 
                 <div className={dayNight ? "eventPopup-light" : "eventPopup-dark"}>
-                    <HighlightOffIcon onClick={handlePopupClose} fontSize="large"/>
+                    <HighlightOffIcon onClick={handlePopupClose} fontSize="large" className="eventPopup-close"/>
                     <h3>Add the event details</h3>
                     <div className="event-popup-content">
                         <p>Enter event Name</p>
@@ -212,7 +212,7 @@ function Calendar() {
                         </div>
                         <div>
                             { hours && 
-                                <select className="event-popup-dropdown" onChange={(e) => setSelectedHours(e.target.value)}>
+                                <select className="event-popup-dropdown" onChange={(e) => setSelectedHours(e.target.value)} value={selectedHours}>
                                     { hours.map((hour, hourIndex) => {
                                     return (
                                         <option key={hourIndex}>{hour}</option>
@@ -221,7 +221,7 @@ function Calendar() {
                                 </select>
                             }
                             { minutes && 
-                                <select className="event-popup-dropdown" onChange={(e) => setSelectedMinutes(e.target.value)}>
+                                <select className="event-popup-dropdown" onChange={(e) => setSelectedMinutes(e.target.value)} value={selectedMinutes}>
                                     { minutes.map((minute, minuteIndex) => {
                                     return (
                                         <option key={minuteIndex}>{minute}</option>
