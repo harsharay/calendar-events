@@ -13,7 +13,17 @@ function DayEvents({ clickedDate, events, dayNight }) {
         if(events[clickedDate]){
             setNoEventForTheDay(false)
             console.log("Events are present for the day",events[clickedDate])
-            setEventsOfTheDay(events[clickedDate])
+            
+            let finalEvents = events[clickedDate].sort((a,b) => {
+                let keyA = new Date(a.formattedDate)
+                let keyB = new Date(b.formattedDate);
+
+                if (keyA > keyB) return -1;
+                if (keyA < keyB) return 1;
+                return 0;
+            })
+
+            setEventsOfTheDay(finalEvents)
         } else {
             setNoEventForTheDay(true)
             console.log("no events scheduled for the day")

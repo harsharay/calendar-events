@@ -149,6 +149,10 @@ function Calendar() {
 
     const handleAddEventClick = () => {
         let fullDate = `${currentDay}-${currentMonth}-${currentYear}`
+
+        let temp = `${currentMonth}-${currentDay}-${currentYear} ${selectedHours}:${selectedMinutes}:00 ${amPm} `
+        let formattedDate = new Date(temp)
+
         if(events[fullDate]){
                 setEvents({
                     ...events,
@@ -157,7 +161,8 @@ function Calendar() {
                         selectedHours,
                         selectedMinutes,
                         amPm,
-                        duration
+                        duration,
+                        formattedDate
                     }]
                 })
                 setEventName("")
@@ -170,7 +175,8 @@ function Calendar() {
                         selectedHours,
                         selectedMinutes,
                         amPm,
-                        duration
+                        duration,
+                        formattedDate
                     }]
                 })
                 setEventName("")
@@ -193,6 +199,13 @@ function Calendar() {
                 prev + 1
             )
         })
+    }
+
+    const handleDurationChange = e => {
+        let durationValue = parseInt(e.target.value)
+        if(!isNaN(durationValue)) {
+            setDuration(durationValue)
+        }
     }
 
 
@@ -240,7 +253,7 @@ function Calendar() {
                     </div>
                     <div className="event-popup-content">
                         <p>Duration (minutes)</p>
-                        <input type="text" value={duration} onChange={e => setDuration(e.target.value)} className={dayNight ? "event-popup-input-light" : "event-popup-input-dark"}/>
+                        <input type="text" value={duration} onChange={handleDurationChange} className={dayNight ? "event-popup-input-light" : "event-popup-input-dark"}/>
                     </div>
                     <div className="event-popup-date">
                             <p>Event Date</p> 
